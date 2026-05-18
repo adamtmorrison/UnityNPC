@@ -9,11 +9,10 @@ unpc_debug = false
 -- IMPORTANT:
 -- dupes = UnityNPC's duplicate-packet detector (util/packets.lua)
 -- packets = Windower's packets library (parse/new/inject)
-local dupes   = require('util/packets')
 settings      = require('util/settings')
 resources     = require('resources')
 packets 	  = require('packets')  
-
+local dupes   = require('util/packets')
 local CommandFactory = require('command/factory')
 local Aliases        = require('util/aliases')
 local NilCommand     = require('command/nil')
@@ -371,34 +370,47 @@ end
 
 --------------------------------------------------------------------------------
 local function OnIncomingData(id, original, pkt, b, i)
-    -- Capture Unity Accolades from packet 0x113 (Currencies 1 update). [3](https://loltank.com/2023/07/01/ff11-gil-guide-maximizing-frming-final-fantasy-xi-in-reisenjima)
+
+    -- 1) Handle currency packet FIRST (so it always runs)
     if id == 0x113 then
         local data = packets.parse('incoming', pkt)
+        if data and data['Unity Accolades'] then
+            local val = tonumber(data['Unity Accolades']) or 0
 
-		if data and data['Unity Accolades'] then
-			local val = tonumber(data['Unity Accolades']) or 0
+            -- cache
+            if type(Powder.set_accolades) == 'function' then
+                Powder.set_accolades(val)
+            else
+                Powder._cached_accolades = val
+            end
 
-			-- existing cache
-			if type(Powder.set_accolades) == 'function' then
-				Powder.set_accolades(val)
-			else
-				Powder._cached_accolades = val
-			end
+            -- weekly tracking
+            Accolades.update_balance(val)
 
-			-- weekly tracking
-			Accolades.update_balance(val)
+            -- fresh timestamp
+            last_currency_update_ts = os.clock()
 
-			-- mark fresh timestamp
-			last_currency_update_ts = os.clock()
+            -- if waiting to print, print now (once)
+            if pending_accolades_report then
+                pending_accolades_report = false
+                print_accolades_report()
+            end
+        end
+    end
 
-			-- ✅ ONLY print report if we were waiting for it
-			if pending_accolades_report then
-				pending_accolades_report = false
-				print_accolades_report()
-			end
-		end
-	end
+    -- 2) Always send packets to command (critical for dialogue flow)
+    local handled = false
+    if command and command.OnIncomingData then
+        handled = command:OnIncomingData(id, pkt)
+    end
+
+    -- 3) Duplicate tracking should NOT block command processing.
+    -- Keep the check for your own diagnostics / optional filtering.
+    dupes.is_duplicate(id, pkt)
+
+    return handled
 end
+
 
 --------------------------------------------------------------------------------
 local function OnOutgoingData(id, _, pkt, b, i)
