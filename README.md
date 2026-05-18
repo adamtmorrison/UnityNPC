@@ -31,4 +31,4 @@ Below is the reason I updated this addon in the first place.  This is my favorit
 ✅ Unity Accolades available
 ✅ Free inventory slots
 ✅ Remaining space in existing stacks
-✅ Weekly cap (your new system)
+✅ Weekly cap 
