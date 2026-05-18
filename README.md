@@ -28,6 +28,6 @@ UnityNPC help commands                        | //unpc help or //unpc ?
 This addon will track your total number of accolades spent this week and automatically resets it to 100,000 at JSP midnight, or if JSP midnight
 has occurred since you last logged in.  
 
-When using the "all" command, this addon checks your accolades and calculates the total number you can purchase based on the total number spent for the week, your total available accolades, and your inventory space.  
+When using the "all" command, this addon checks your accolades. It calculates the maximum number you can purchase based on the total amount spent for the week, your available accolades, and your inventory space.  
 
-As with all my addons, this is still a work in progress and should be used at your own risk.
+As with all addons, this is still a work in progress and should be used at your own risk.
