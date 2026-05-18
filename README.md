@@ -25,9 +25,10 @@ UnityNPC help commands                        | //unpc help or //unpc ?
 \<zone\> should be replaced with zone names (you can use the in-game auto-translate feature).  
 \<item\> should be replaced with item names from [data/items.lua](https://github.com/Tny5989/UnityNPC/blob/master/data/items.lua)  
 
-This addon will track your total number of accolades spent this week and automatically resets it to 100,000 at JSP midnight, or if JSP midnight
-has occurred since you last logged in.  
+Below is the reason I updated this addon in the first place.  This is my favorite feature.  It will save a ton of time.  
+👉 The addon calculates the maximum you can buy based on:
 
-When using the "all" command, this addon checks your accolades. It calculates the maximum number you can purchase based on the total amount spent for the week, your available accolades, and your inventory space.  
-
-As with all addons, this is still a work in progress and should be used at your own risk.
+✅ Unity Accolades available
+✅ Free inventory slots
+✅ Remaining space in existing stacks
+✅ Weekly cap (your new system)
