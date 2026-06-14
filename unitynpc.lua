@@ -1,5 +1,5 @@
 _addon.name = 'UnityNPC'
-_addon.author = 'Areint/Alzade'
+_addon.author = 'Areint/Alzade + VC-MSCP (Vibe coding using Microsoft CoPilot)'
 _addon.version = '1.1.6'
 _addon.commands = {'unpc'}
 
