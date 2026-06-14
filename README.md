@@ -32,3 +32,5 @@ Below is the reason I updated this addon in the first place.  This is my favorit
 ✅ Free inventory slots
 ✅ Remaining space in existing stacks
 ✅ Weekly cap 
+
+Enhancements done via: VC-MSCP (Vibe coding using Microsoft CoPilot)
